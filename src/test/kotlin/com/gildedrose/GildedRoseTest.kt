@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test
 
 internal class GildedRoseTest {
 
+    private val backstagePassName = "Backstage passes to a TAFKAL80ETC concert"
+
     @Test
     fun `sellIn decreases by one after each update`() {
         val expectedSellInValues = listOf(3, 2, 1, 0, -1, -2)
@@ -131,6 +133,23 @@ internal class GildedRoseTest {
 
         val storedItem = app.items.find { it.name === item.name }
         Assertions.assertEquals(storedItem!!.quality, item.quality)
+    }
+
+    @Test
+    fun `quality of Backstage Pass increases by one after each update before sellIn is 10`() {
+        val expectedQualityValues = listOf(5, 6, 7, 8, 9, 10)
+        val actualQualityValues = mutableListOf(expectedQualityValues.first())
+        val safeInitialSellIn = 10 + expectedQualityValues.size + 1
+        val item = Item(backstagePassName, safeInitialSellIn, expectedQualityValues.first())
+        val app = GildedRose(arrayOf(item))
+
+        while (actualQualityValues.size < expectedQualityValues.size) {
+            app.updateQuality()
+            val storedItem = app.items.find { it.name === item.name }
+            actualQualityValues.add(storedItem!!.quality)
+        }
+
+        Assertions.assertIterableEquals(expectedQualityValues, actualQualityValues)
     }
 }
 
