@@ -185,6 +185,23 @@ internal class GildedRoseTest {
 
         Assertions.assertIterableEquals(expectedQualityValues, actualQualityValues)
     }
+
+    @Test
+    fun `quality of Backstage Pass decreases to 0 when sellIn is under 0`() {
+        val expectedQualityValues = listOf(5, 0, 0, 0)
+        val actualQualityValues = mutableListOf(expectedQualityValues.first())
+        val initialSellIn = 0
+        val item = Item(backstagePassName, initialSellIn, expectedQualityValues.first())
+        val app = GildedRose(arrayOf(item))
+
+        while (actualQualityValues.size < expectedQualityValues.size) {
+            app.updateQuality()
+            val storedItem = app.items.find { it.name === item.name }
+            actualQualityValues.add(storedItem!!.quality)
+        }
+
+        Assertions.assertIterableEquals(expectedQualityValues, actualQualityValues)
+    }
 }
 
 /*
