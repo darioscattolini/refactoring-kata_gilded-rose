@@ -8,11 +8,10 @@ internal class GildedRoseTest {
 
     @Test
     fun `sellIn decreases by one after each update`() {
-        val initialSellIn = 5
-        val item = Item("foo", initialSellIn, 20)
+        val expectedSellInValues = listOf(3, 2, 1, 0, -1, -2)
+        val actualSellInValues = mutableListOf(expectedSellInValues.first())
+        val item = Item("foo", expectedSellInValues.first(), 20)
         val app = GildedRose(arrayOf(item))
-        val expectedSellInValues = listOf(5, 4, 3, 2, 1, 0)
-        val actualSellInValues = mutableListOf(5)
 
         while (actualSellInValues.size < expectedSellInValues.size) {
             app.updateQuality()
