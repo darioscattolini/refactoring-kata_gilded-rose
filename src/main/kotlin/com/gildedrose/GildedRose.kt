@@ -5,6 +5,10 @@ class GildedRose(var items: Array<Item>) {
         item.quality = if (item.quality - amount >= 0) item.quality - amount else 0
     }
 
+    private fun increaseQualityBy(item: Item, amount: Int) {
+        item.quality = if (item.quality + amount <= 50) item.quality + amount else 50
+    }
+
     fun updateQuality() {
         for (item in items) {
             if (
@@ -14,21 +18,15 @@ class GildedRose(var items: Array<Item>) {
             ) {
                 decreaseQualityBy(item, 1)
             } else {
-                if (item.quality < 50) {
-                    item.quality = item.quality + 1
+                increaseQualityBy(item, 1)
 
-                    if (item.name == "Backstage passes to a TAFKAL80ETC concert") {
-                        if (item.sellIn < 11) {
-                            if (item.quality < 50) {
-                                item.quality = item.quality + 1
-                            }
-                        }
+                if (item.name == "Backstage passes to a TAFKAL80ETC concert") {
+                    if (item.sellIn < 11) {
+                        increaseQualityBy(item, 1)
+                    }
 
-                        if (item.sellIn < 6) {
-                            if (item.quality < 50) {
-                                item.quality = item.quality + 1
-                            }
-                        }
+                    if (item.sellIn < 6) {
+                        increaseQualityBy(item, 1)
                     }
                 }
             }
@@ -47,9 +45,7 @@ class GildedRose(var items: Array<Item>) {
                         decreaseQualityBy(item, item.quality)
                     }
                 } else {
-                    if (item.quality < 50) {
-                        item.quality = item.quality + 1
-                    }
+                    increaseQualityBy(item, 1)
                 }
             }
         }
