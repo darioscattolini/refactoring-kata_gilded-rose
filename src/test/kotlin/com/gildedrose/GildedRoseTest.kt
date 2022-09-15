@@ -81,6 +81,17 @@ internal class GildedRoseTest {
 
         Assertions.assertIterableEquals(expectedQualityValues, actualQualityValues)
     }
+
+    @Test
+    fun `quality of item cannot increase to more than 50`() {
+        val item = Item("Aged Brie", 10, 50)
+        val app = GildedRose(arrayOf(item))
+
+        app.updateQuality()
+        val storedItem = app.items.find { it.name === item.name }
+
+        Assertions.assertEquals(storedItem!!.quality, 50)
+    }
 }
 
 /*
