@@ -13,7 +13,7 @@ class GildedRose(var items: Array<Item>) {
         for (item in items) {
             if (item.name == "Sulfuras, Hand of Ragnaros") continue
 
-            item.sellIn = item.sellIn - 1
+            item.sellIn--
 
             if (
                 item.name != "Aged Brie" &&
