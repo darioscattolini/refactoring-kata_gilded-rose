@@ -1,7 +1,6 @@
 package com.gildedrose
 
 import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 internal class GildedRoseTest {
@@ -20,6 +19,22 @@ internal class GildedRoseTest {
         }
 
         Assertions.assertIterableEquals(expectedSellInValues, actualSellInValues)
+    }
+
+    @Test
+    fun `quality of regular item decreases by one after each update`() {
+        val expectedQualityValues = listOf(5, 4, 3, 2, 1, 0)
+        val actualQualityValues = mutableListOf(expectedQualityValues.first())
+        val item = Item("foo", 10, expectedQualityValues.first())
+        val app = GildedRose(arrayOf(item))
+
+        while (actualQualityValues.size < expectedQualityValues.size) {
+            app.updateQuality()
+            val storedItem = app.items.find { it.name === item.name }
+            actualQualityValues.add(storedItem!!.quality)
+        }
+
+        Assertions.assertIterableEquals(expectedQualityValues, actualQualityValues)
     }
 
 }
