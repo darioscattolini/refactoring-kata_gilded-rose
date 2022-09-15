@@ -25,10 +25,10 @@ class GildedRose(var items: Array<Item>) {
                 if (item.sellIn < 6) {
                     increaseQualityBy(item, 1)
                 }
-            } else if (item.name != "Aged Brie") {
-                decreaseQualityBy(item, 1)
-            } else {
+            } else if (item.name == "Aged Brie") {
                 increaseQualityBy(item, 1)
+            } else {
+                decreaseQualityBy(item, 1)
             }
 
             if (item.sellIn < 0) {
