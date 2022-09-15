@@ -3,6 +3,9 @@ package com.gildedrose
 import kotlin.Double.Companion.POSITIVE_INFINITY
 
 class GildedRose(var items: Array<Item>) {
+    private val maxQuality = 50
+    private val minQuality = 0
+    private val positiveInfinity = POSITIVE_INFINITY.toInt()
 
     fun updateQuality() {
         for (item in items) {
@@ -22,9 +25,9 @@ class GildedRose(var items: Array<Item>) {
 
     private fun modifyQualityBy(item: Item, amount: Int) {
         item.quality = when (item.quality + amount) {
-            in 50..POSITIVE_INFINITY.toInt() -> 50
-            in 0..49 -> item.quality + amount
-            else -> 0
+            in maxQuality..positiveInfinity -> maxQuality
+            in minQuality until maxQuality -> item.quality + amount
+            else -> minQuality
         }
     }
 
