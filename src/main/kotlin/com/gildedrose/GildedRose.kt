@@ -27,14 +27,14 @@ class GildedRose(var items: Array<Item>) {
                 if (item.sellIn < 6) {
                     increaseQualityBy(item, 1)
                 }
+
+                if (item.sellIn < 0) {
+                    decreaseQualityBy(item, item.quality)
+                }
             } else if (item.name == "Aged Brie") {
                 increaseQualityBy(item, qualityVariationAmount)
             } else {
                 decreaseQualityBy(item, qualityVariationAmount)
-            }
-
-            if (item.sellIn < 0 && item.name == "Backstage passes to a TAFKAL80ETC concert") {
-                decreaseQualityBy(item, item.quality)
             }
         }
     }
