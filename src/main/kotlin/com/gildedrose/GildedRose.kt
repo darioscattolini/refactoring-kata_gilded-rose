@@ -15,6 +15,8 @@ class GildedRose(var items: Array<Item>) {
 
             item.sellIn--
 
+            var qualityVariationAmount = if (item.sellIn < 0) 2 else 1
+
             if (item.name == "Backstage passes to a TAFKAL80ETC concert") {
                 increaseQualityBy(item, 1)
 
@@ -26,21 +28,13 @@ class GildedRose(var items: Array<Item>) {
                     increaseQualityBy(item, 1)
                 }
             } else if (item.name == "Aged Brie") {
-                increaseQualityBy(item, 1)
+                increaseQualityBy(item, qualityVariationAmount)
             } else {
-                decreaseQualityBy(item, 1)
+                decreaseQualityBy(item, qualityVariationAmount)
             }
 
-            if (item.sellIn < 0) {
-                if (item.name != "Aged Brie") {
-                    if (item.name != "Backstage passes to a TAFKAL80ETC concert") {
-                        decreaseQualityBy(item, 1)
-                    } else {
-                        decreaseQualityBy(item, item.quality)
-                    }
-                } else {
-                    increaseQualityBy(item, 1)
-                }
+            if (item.sellIn < 0 && item.name == "Backstage passes to a TAFKAL80ETC concert") {
+                decreaseQualityBy(item, item.quality)
             }
         }
     }
