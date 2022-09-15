@@ -11,10 +11,13 @@ class GildedRose(var items: Array<Item>) {
 
     fun updateQuality() {
         for (item in items) {
+            if (item.name == "Sulfuras, Hand of Ragnaros") continue
+
+            item.sellIn = item.sellIn - 1
+
             if (
                 item.name != "Aged Brie" &&
-                item.name != "Backstage passes to a TAFKAL80ETC concert" &&
-                item.name != "Sulfuras, Hand of Ragnaros"
+                item.name != "Backstage passes to a TAFKAL80ETC concert"
             ) {
                 decreaseQualityBy(item, 1)
             } else {
@@ -31,16 +34,10 @@ class GildedRose(var items: Array<Item>) {
                 }
             }
 
-            if (item.name != "Sulfuras, Hand of Ragnaros") {
-                item.sellIn = item.sellIn - 1
-            }
-
             if (item.sellIn < 0) {
                 if (item.name != "Aged Brie") {
                     if (item.name != "Backstage passes to a TAFKAL80ETC concert") {
-                        if (item.name != "Sulfuras, Hand of Ragnaros") {
-                            decreaseQualityBy(item, 1)
-                        }
+                        decreaseQualityBy(item, 1)
                     } else {
                         decreaseQualityBy(item, item.quality)
                     }
