@@ -110,6 +110,17 @@ internal class GildedRoseTest {
 
         Assertions.assertIterableEquals(expectedQualityValues, actualQualityValues)
     }
+
+    @Test
+    fun `sellIn of Sulfuras never changes`() {
+        val item = Item("Sulfuras, Hand of Ragnaros", 5, 5)
+        val app = GildedRose(arrayOf(item))
+
+        repeat(3) { app.updateQuality() }
+
+        val storedItem = app.items.find { it.name === item.name }
+        Assertions.assertEquals(storedItem!!.sellIn, item.sellIn)
+    }
 }
 
 /*
