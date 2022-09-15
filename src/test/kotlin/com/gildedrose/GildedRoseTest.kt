@@ -25,7 +25,8 @@ internal class GildedRoseTest {
     fun `quality of regular item decreases by one after each update`() {
         val expectedQualityValues = listOf(5, 4, 3, 2, 1, 0)
         val actualQualityValues = mutableListOf(expectedQualityValues.first())
-        val item = Item("foo", 10, expectedQualityValues.first())
+        val safeInitialSellIn = expectedQualityValues.size + 1
+        val item = Item("foo", safeInitialSellIn, expectedQualityValues.first())
         val app = GildedRose(arrayOf(item))
 
         while (actualQualityValues.size < expectedQualityValues.size) {
