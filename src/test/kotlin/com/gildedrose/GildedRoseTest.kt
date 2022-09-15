@@ -115,7 +115,7 @@ internal class GildedRoseTest {
 
     @Test
     fun `sellIn of Sulfuras never changes`() {
-        val item = Item("Sulfuras, Hand of Ragnaros", 5, 5)
+        val item = Item("Sulfuras, Hand of Ragnaros", 5, 80)
         val app = GildedRose(arrayOf(item))
 
         repeat(3) { app.updateQuality() }
@@ -125,8 +125,8 @@ internal class GildedRoseTest {
     }
 
     @Test
-    fun `quality of Sulfuras never changes`() {
-        val item = Item("Sulfuras, Hand of Ragnaros", 5, 5)
+    fun `quality of Sulfuras never changes (even if above 50)`() {
+        val item = Item("Sulfuras, Hand of Ragnaros", 5, 80)
         val app = GildedRose(arrayOf(item))
 
         repeat(3) { app.updateQuality() }
