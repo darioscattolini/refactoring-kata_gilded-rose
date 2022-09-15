@@ -1,5 +1,7 @@
 package com.gildedrose
 
+import kotlin.Double.Companion.POSITIVE_INFINITY
+
 class GildedRose(var items: Array<Item>) {
     private fun decreaseQualityBy(item: Item, amount: Int) {
         item.quality = if (item.quality - amount >= 0) item.quality - amount else 0
@@ -18,18 +20,17 @@ class GildedRose(var items: Array<Item>) {
             var qualityVariationAmount = if (item.sellIn < 0) 2 else 1
 
             if (item.name == "Backstage passes to a TAFKAL80ETC concert") {
-                increaseQualityBy(item, 1)
-
-                if (item.sellIn < 11) {
-                    increaseQualityBy(item, 1)
+                qualityVariationAmount = when (item.sellIn) {
+                    in 11..POSITIVE_INFINITY.toInt() -> 1
+                    in 6..10 -> 2
+                    in 0..5 -> 3
+                    else -> item.quality
                 }
 
-                if (item.sellIn < 6) {
-                    increaseQualityBy(item, 1)
-                }
-
-                if (item.sellIn < 0) {
-                    decreaseQualityBy(item, item.quality)
+                if (item.sellIn >= 0) {
+                    increaseQualityBy(item, qualityVariationAmount)
+                } else {
+                    decreaseQualityBy(item, qualityVariationAmount)
                 }
             } else if (item.name == "Aged Brie") {
                 increaseQualityBy(item, qualityVariationAmount)
