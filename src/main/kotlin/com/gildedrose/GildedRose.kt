@@ -17,14 +17,12 @@ class GildedRose(var items: Array<Item>) {
 
             item.sellIn--
 
-            var qualityVariationAmount = if (item.sellIn < 0) 2 else 1
+            val qualityVariationAmount = if (item.sellIn < 0) 2 else 1
 
-            if (item.name == "Backstage passes to a TAFKAL80ETC concert") {
-                updateBackstagePasses(item)
-            } else if (item.name == "Aged Brie") {
-                increaseQualityBy(item, qualityVariationAmount)
-            } else {
-                decreaseQualityBy(item, qualityVariationAmount)
+            when (item.name) {
+                "Backstage passes to a TAFKAL80ETC concert" -> updateBackstagePasses(item)
+                "Aged Brie" -> increaseQualityBy(item, qualityVariationAmount)
+                else -> decreaseQualityBy(item, qualityVariationAmount)
             }
         }
     }
@@ -43,6 +41,5 @@ class GildedRose(var items: Array<Item>) {
             decreaseQualityBy(item, qualityVariationAmount)
         }
     }
-
 }
 
