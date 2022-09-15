@@ -13,7 +13,8 @@ class GildedRose(var items: Array<Item>) {
 
             item.sellIn--
 
-            val qualityVariationAmount = if (item.sellIn < 0) -2 else -1
+            var qualityVariationAmount = if (item.sellIn < 0) -2 else -1
+            if (item.name.startsWith("Conjured", true)) qualityVariationAmount *= 2
 
             when (item.name) {
                 "Backstage passes to a TAFKAL80ETC concert" -> updateBackstagePasses(item)

@@ -202,6 +202,51 @@ internal class GildedRoseTest {
 
         Assertions.assertIterableEquals(expectedQualityValues, actualQualityValues)
     }
+
+    @Test
+    fun `quality of conjured item decreases by two after each update`() {
+        val expectedQualityValues = listOf(10, 8, 6, 4, 2, 0)
+        val actualQualityValues = mutableListOf(expectedQualityValues.first())
+        val safeInitialSellIn = expectedQualityValues.size + 1
+        val item = Item("Conjured foo", safeInitialSellIn, expectedQualityValues.first())
+        val app = GildedRose(arrayOf(item))
+
+        while (actualQualityValues.size < expectedQualityValues.size) {
+            app.updateQuality()
+            val storedItem = app.items.find { it.name === item.name }
+            actualQualityValues.add(storedItem!!.quality)
+        }
+
+        Assertions.assertIterableEquals(expectedQualityValues, actualQualityValues)
+    }
+
+    @Test
+    fun `quality of conjured item cannot decrease to less than 0`() {
+        val item = Item("Conjured bar", 10, 2)
+        val app = GildedRose(arrayOf(item))
+
+        app.updateQuality()
+        app.updateQuality()
+        val storedItem = app.items.find { it.name === item.name }
+
+        Assertions.assertEquals(storedItem!!.quality, 0)
+    }
+
+    @Test
+    fun `quality of conjured item decreases by four after sellIn date reaches 0`() {
+        val expectedQualityValues = listOf(13, 9, 5, 1, 0, 0)
+        val actualQualityValues = mutableListOf(expectedQualityValues.first())
+        val item = Item("Conjured taz", 0, expectedQualityValues.first())
+        val app = GildedRose(arrayOf(item))
+
+        while (actualQualityValues.size < expectedQualityValues.size) {
+            app.updateQuality()
+            val storedItem = app.items.find { it.name === item.name }
+            actualQualityValues.add(storedItem!!.quality)
+        }
+
+        Assertions.assertIterableEquals(expectedQualityValues, actualQualityValues)
+    }
 }
 
 /*
