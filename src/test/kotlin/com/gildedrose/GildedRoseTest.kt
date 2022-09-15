@@ -40,9 +40,10 @@ internal class GildedRoseTest {
 
     @Test
     fun `quality of item cannot decrease to less than 0`() {
-        val item = Item("foo", 10, 0)
+        val item = Item("foo", 10, 1)
         val app = GildedRose(arrayOf(item))
 
+        app.updateQuality()
         app.updateQuality()
         val storedItem = app.items.find { it.name === item.name }
 
@@ -84,9 +85,10 @@ internal class GildedRoseTest {
 
     @Test
     fun `quality of item cannot increase to more than 50`() {
-        val item = Item("Aged Brie", 10, 50)
+        val item = Item("Aged Brie", 10, 49)
         val app = GildedRose(arrayOf(item))
 
+        app.updateQuality()
         app.updateQuality()
         val storedItem = app.items.find { it.name === item.name }
 
