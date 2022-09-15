@@ -94,6 +94,22 @@ internal class GildedRoseTest {
 
         Assertions.assertEquals(storedItem!!.quality, 50)
     }
+
+    @Test
+    fun `quality of Aged Brie item increases by two after sellIn date reaches 0`() {
+        val expectedQualityValues = listOf(43, 45, 47, 49, 50, 50)
+        val actualQualityValues = mutableListOf(expectedQualityValues.first())
+        val item = Item("Aged Brie", 0, expectedQualityValues.first())
+        val app = GildedRose(arrayOf(item))
+
+        while (actualQualityValues.size < expectedQualityValues.size) {
+            app.updateQuality()
+            val storedItem = app.items.find { it.name === item.name }
+            actualQualityValues.add(storedItem!!.quality)
+        }
+
+        Assertions.assertIterableEquals(expectedQualityValues, actualQualityValues)
+    }
 }
 
 /*
