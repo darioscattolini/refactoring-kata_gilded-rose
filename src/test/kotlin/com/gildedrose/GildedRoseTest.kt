@@ -47,6 +47,26 @@ internal class GildedRoseTest {
 
         Assertions.assertEquals(storedItem!!.quality, 0)
     }
+
+    @Test
+    fun `quality of regular item decreases by two after sellIn date reaches 0`() {
+        val expectedQualityValues = listOf(7, 5, 3, 1, 0, 0)
+        val actualQualityValues = mutableListOf(expectedQualityValues.first())
+        val item = Item("foo", 0, expectedQualityValues.first())
+        val app = GildedRose(arrayOf(item))
+
+        while (actualQualityValues.size < expectedQualityValues.size) {
+            app.updateQuality()
+            val storedItem = app.items.find { it.name === item.name }
+            actualQualityValues.add(storedItem!!.quality)
+        }
+
+        Assertions.assertIterableEquals(expectedQualityValues, actualQualityValues)
+    }
 }
 
-
+/*
+    Tests a añadir:
+    - Quality no se puede inicializar en negativo
+    - Quality no se puede inicializar en > 50
+ */
