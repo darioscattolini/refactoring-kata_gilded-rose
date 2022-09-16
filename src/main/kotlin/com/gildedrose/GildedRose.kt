@@ -8,13 +8,10 @@ class GildedRose(var items: Array<Item>) {
     private val positiveInfinity = POSITIVE_INFINITY.toInt()
 
     fun updateQuality() {
-        for (item in items) {
-            if (item.name == "Sulfuras, Hand of Ragnaros") continue
-
+        for (item in items.filter { it.name != "Sulfuras, Hand of Ragnaros" }) {
             item.sellIn--
 
-            var qualityVariationAmount = if (item.sellIn < 0) -2 else -1
-            if (item.name.startsWith("Conjured", true)) qualityVariationAmount *= 2
+            val qualityVariationAmount = getQualityVariationAmount(item)
 
             when (item.name) {
                 "Backstage passes to a TAFKAL80ETC concert" -> updateBackstagePasses(item)
@@ -22,6 +19,13 @@ class GildedRose(var items: Array<Item>) {
                 else -> modifyQualityBy(item, qualityVariationAmount)
             }
         }
+    }
+
+    private fun getQualityVariationAmount(item: Item): Int {
+        var qualityVariationAmount = if (item.sellIn < 0) -2 else -1
+        if (item.name.startsWith("Conjured", true)) qualityVariationAmount *= 2
+
+        return qualityVariationAmount
     }
 
     private fun modifyQualityBy(item: Item, amount: Int) {
