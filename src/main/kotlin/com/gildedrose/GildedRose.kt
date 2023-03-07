@@ -20,12 +20,7 @@ class GildedRose(items: Array<Item>) {
         }
     }
 
-    private fun getQualityVariationAmount(item: Item): Int {
-        var qualityVariationAmount = if (item.sellIn < 0) -2 else -1
-        if (item.name.startsWith("Conjured", true)) qualityVariationAmount *= 2
-
-        return qualityVariationAmount
-    }
+    private fun getQualityVariationAmount(item: Item) = if (item.sellIn < 0) -2 else -1
 
     private fun updateBackstagePasses(item: UpdatableItem) {
         val qualityVariationAmount = when (item.sellIn) {
