@@ -10,8 +10,7 @@ class GildedRose(items: Array<Item>) {
 
     fun updateQuality() {
         for (item in items.filterNot { it is Sulfuras }) {
-            item.sellIn--
-
+            item.updateQuality()
             val qualityVariationAmount = getQualityVariationAmount(item)
 
             when (item) {
