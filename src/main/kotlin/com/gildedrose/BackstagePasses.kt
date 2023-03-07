@@ -2,7 +2,7 @@ package com.gildedrose
 
 class BackstagePasses(item: Item) : UpdatableItem(item) {
     override fun updateQuality() {
-        item.sellIn--
+        updateSellIn()
 
         val qualityVariationAmount = when (sellIn) {
             in 11..Double.POSITIVE_INFINITY.toInt() -> 1

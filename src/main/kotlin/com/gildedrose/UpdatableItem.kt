@@ -1,23 +1,6 @@
 package com.gildedrose
 
-abstract class UpdatableItem protected constructor(protected val item: Item) {
-    private val maxQuality = 50
-    private val minQuality = 0
-    private val positiveInfinity = Double.POSITIVE_INFINITY.toInt()
-
-    abstract fun updateQuality()
-
-    protected fun modifyQualityBy(amount: Int) {
-        item.quality = when (quality + amount) {
-            in maxQuality..positiveInfinity -> maxQuality
-            in minQuality until maxQuality -> quality + amount
-            else -> minQuality
-        }
-    }
-
-    protected val baseQualityVariation: Int
-        get() = if (item.sellIn < 0) -2 else -1
-
+abstract class UpdatableItem protected constructor(private val item: Item) {
     val name: String
         get() = item.name
 
@@ -26,6 +9,27 @@ abstract class UpdatableItem protected constructor(protected val item: Item) {
 
     val quality: Int
         get() = item.quality
+
+    protected val baseQualityVariation: Int
+        get() = if (item.sellIn < 0) -2 else -1
+
+    private val maxQuality = 50
+    private val minQuality = 0
+    private val positiveInfinity = Double.POSITIVE_INFINITY.toInt()
+
+    abstract fun updateQuality()
+
+    protected fun updateSellIn() {
+        item.sellIn--
+    }
+
+    protected fun modifyQualityBy(amount: Int) {
+        item.quality = when (quality + amount) {
+            in maxQuality..positiveInfinity -> maxQuality
+            in minQuality until maxQuality -> quality + amount
+            else -> minQuality
+        }
+    }
 
     companion object {
         fun fromItem(item: Item): UpdatableItem {
