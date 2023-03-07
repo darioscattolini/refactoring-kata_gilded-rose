@@ -5,5 +5,4 @@ class AgedBrie(item: Item) : UpdatableItem(item) {
         updateSellIn()
         modifyQualityBy(baseQualityVariation * -1)
     }
-
 }

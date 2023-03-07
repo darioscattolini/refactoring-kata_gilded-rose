@@ -13,5 +13,4 @@ class BackstagePasses(item: Item) : UpdatableItem(item) {
 
         modifyQualityBy(qualityVariationAmount)
     }
-
 }
