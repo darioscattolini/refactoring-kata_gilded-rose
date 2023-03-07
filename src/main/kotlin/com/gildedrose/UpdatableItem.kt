@@ -37,7 +37,7 @@ abstract class UpdatableItem protected constructor(private val item: Item) {
                 item.name.startsWith("Sulfuras", ignoreCase = true) -> Sulfuras(item)
                 item.name.startsWith("Conjured", ignoreCase = true) -> ConjuredItem(item)
                 item.name.startsWith("Backstage Passes", ignoreCase = true) -> BackstagePasses(item)
-                item.name.startsWith("Aged Brie", ignoreCase = false) -> AgedBrie(item)
+                item.name.startsWith("Aged Brie", ignoreCase = true) -> AgedBrie(item)
                 else -> RegularItem(item)
             }
         }
