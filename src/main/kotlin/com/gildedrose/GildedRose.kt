@@ -14,6 +14,7 @@ class GildedRose(items: Array<Item>) {
                 is BackstagePasses -> updateBackstagePasses(item)
                 is AgedBrie -> item.modifyQualityBy(-qualityVariationAmount)
                 is Sulfuras -> {}
+                is ConjuredItem -> {}
                 else -> item.modifyQualityBy(qualityVariationAmount)
             }
         }
