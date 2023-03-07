@@ -15,6 +15,9 @@ abstract class UpdatableItem protected constructor(item: Item) : Item(item.name,
         }
     }
 
+    protected val baseQualityVariation: Int
+        get() = if (sellIn < 0) -2 else -1
+
     companion object {
         fun fromItem(item: Item): UpdatableItem {
             return when {
