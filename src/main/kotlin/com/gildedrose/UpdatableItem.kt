@@ -7,7 +7,7 @@ abstract class UpdatableItem protected constructor(item: Item) : Item(item.name,
 
     abstract fun updateQuality()
 
-    public fun modifyQualityBy(amount: Int) {
+    protected fun modifyQualityBy(amount: Int) {
         quality = when (quality + amount) {
             in maxQuality..positiveInfinity -> maxQuality
             in minQuality until maxQuality -> quality + amount
