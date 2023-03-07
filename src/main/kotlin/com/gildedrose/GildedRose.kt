@@ -2,20 +2,21 @@ package com.gildedrose
 
 import kotlin.Double.Companion.POSITIVE_INFINITY
 
-class GildedRose(var items: Array<Item>) {
+class GildedRose(items: Array<Item>) {
+    val items = items.map { UpdatableItem.fromItem(it) }
     private val maxQuality = 50
     private val minQuality = 0
     private val positiveInfinity = POSITIVE_INFINITY.toInt()
 
     fun updateQuality() {
-        for (item in items.filter { it.name != "Sulfuras, Hand of Ragnaros" }) {
+        for (item in items.filterNot { it is Sulfuras }) {
             item.sellIn--
 
             val qualityVariationAmount = getQualityVariationAmount(item)
 
-            when (item.name) {
-                "Backstage passes to a TAFKAL80ETC concert" -> updateBackstagePasses(item)
-                "Aged Brie" -> modifyQualityBy(item, -qualityVariationAmount)
+            when (item) {
+                is BackstagePasses -> updateBackstagePasses(item)
+                is AgedBrie -> modifyQualityBy(item, -qualityVariationAmount)
                 else -> modifyQualityBy(item, qualityVariationAmount)
             }
         }
