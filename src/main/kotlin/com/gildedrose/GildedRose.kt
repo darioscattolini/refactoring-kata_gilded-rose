@@ -9,13 +9,14 @@ class GildedRose(items: Array<Item>) {
     private val positiveInfinity = POSITIVE_INFINITY.toInt()
 
     fun updateQuality() {
-        for (item in items.filterNot { it is Sulfuras }) {
+        for (item in items) {
             item.updateQuality()
             val qualityVariationAmount = getQualityVariationAmount(item)
 
             when (item) {
                 is BackstagePasses -> updateBackstagePasses(item)
                 is AgedBrie -> modifyQualityBy(item, -qualityVariationAmount)
+                is Sulfuras -> {}
                 else -> modifyQualityBy(item, qualityVariationAmount)
             }
         }
